@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2021 The LineageOS Project
+# Copyright (C) 2022 The Project 404
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -9,20 +9,23 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
-# Inherit some common Pixel Experience stuff.
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+# Inherit some common Project404 stuff.
+$(call inherit-product, vendor/404/configs/common.mk)
+
+# Bootanimation
+TARGET_BOOT_ANIMATION_RES := 720
 
 # Inherit from Mi439 device
 $(call inherit-product, device/xiaomi/mi439/device.mk)
 
 # Overlays
 PRODUCT_PACKAGES += \
-    xiaomi_pine_overlay_aosp \
-    xiaomi_olive_overlay_aosp
+    xiaomi_pine_overlay_p404 \
+    xiaomi_olive_overlay_p404
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := mi439
-PRODUCT_NAME := aosp_mi439
+PRODUCT_NAME := p404_mi439
 BOARD_VENDOR := Xiaomi
 PRODUCT_BRAND := Xiaomi
 PRODUCT_MODEL := SDM439
@@ -36,3 +39,12 @@ PRODUCT_BUILD_PROP_OVERRIDES += \
 
 # Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
 BUILD_FINGERPRINT := "Xiaomi/olive/olive:10/QKQ1.191014.001/V12.5.1.0.QCNMIXM:user/release-keys"
+
+# P404 Stuff
+P404_BUILDTYPE := TOKUI
+
+ifeq ($(WITH_GAPPS),true)
+P404_BUILDTYPE := TOKUI-GAPPS
+else
+P404_BUILDTYPE := TOKUI-VANILLA
+endif
